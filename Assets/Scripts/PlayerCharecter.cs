@@ -84,12 +84,15 @@ public class PlayerCharecter : Character
         _rigidBody.AddForce(0, _jumpNewForce, 0, ForceMode.VelocityChange);
     }
 
-    internal void Onchange(List<DataChange> changes)
+    internal void OnChange(List<DataChange> changes)
     {
         foreach (var dataChange in changes)
         {
             switch (dataChange.Field)
             {
+                case "loss":
+                    MultyplayerManager.Instance._lossCounter.SetPlayerLoss((short)dataChange.Value);
+                    break;
                 case "currentHP":
                     _health.SetCurrent(((sbyte)dataChange.Value));
                     break;

@@ -40,6 +40,12 @@ public class EnemyCharacter : Character
         _health.SetCurrent(value);
     }
 
+    public void RestoreHP(int newValue)
+    {
+        _health.SetCurrent(newValue);
+    }
+
+
     public void SetSpeed(float value) => _speed = value;
 
     public void SetMovement(in Vector3 position, in Vector3 velocity, in float averageInterval)
