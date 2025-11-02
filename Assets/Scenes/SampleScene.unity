@@ -150,7 +150,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::MultyplayerManager
   _colyseusSettings: {fileID: 11400000, guid: 9f4a906ee94e5794f8041e0015107283, type: 2}
   <_lossCounter>k__BackingField: {fileID: 773190230}
-  _player: {fileID: 5398323914787198642, guid: 5b7bec4e76d91c24db9baaade2725468, type: 3}
+  _player: {fileID: 5398323914787198642, guid: 6d2bf07430bf72748b3e9b73105cbd2f, type: 3}
   _enemy: {fileID: 1488646223793790823, guid: cdd4943400c91354ebc43971397ae308, type: 3}
 --- !u!4 &314402519
 Transform:
