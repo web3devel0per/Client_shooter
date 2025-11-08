@@ -79,7 +79,6 @@ public class Controller : MonoBehaviour
             { "rX", rotateX },
             { "rY", rotateY },
         };
-        Debug.Log("SendMove");
         _multiplayerManager.SendMessageToServer("move", data);
 
     }

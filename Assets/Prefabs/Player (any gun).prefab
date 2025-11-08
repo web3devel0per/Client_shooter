@@ -734,7 +734,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerGun
   _bulletPrefab: {fileID: 6815079978510425188, guid: 7632baebcc183aa4788bb8f5550c4eb6, type: 3}
-  _danage: 1
+  _damage: 1
   _bulletPoint: {fileID: 4358090368490735874}
   _bulletSpeed: 20
   _shootDelay: 0.2
