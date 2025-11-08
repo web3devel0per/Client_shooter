@@ -6,7 +6,9 @@ using UnityEngine;
 public class MultyplayerManager : ColyseusManager<MultyplayerManager>
 {
 
+    [field: SerializeField] public Skins _skins;
     [field: SerializeField] public LossCounter _lossCounter { get; private set; }
+    [field: SerializeField] public SpawnPoints _spawnPoints { get; private set; }
     [SerializeField] private PlayerCharecter _player;
     [SerializeField] private EnemyController _enemy;
 
@@ -24,10 +26,18 @@ public class MultyplayerManager : ColyseusManager<MultyplayerManager>
 
     private async void Connect()
     {
+        _spawnPoints.GetPoint(UnityEngine.Random.Range(0, _spawnPoints.length), out Vector3 spawnPosition, out Vector3 spawnRotation);
+
         Dictionary<string, object> data = new Dictionary<string, object>()
         {
-            {"speed",  _player._speed},
-            {"hp",  _player.maxHealth}
+            { "skins", _skins.lenght },
+            { "points", _spawnPoints.length },
+            { "speed", _player._speed },
+            { "hp", _player.maxHealth },
+            { "pX", spawnPosition.x },
+            { "pY", spawnPosition.y },
+            { "pZ", spawnPosition.z },
+            { "rY", spawnRotation.y }
         };
 
         _room = await Instance.client.JoinOrCreate<State>("state_handler", data);
@@ -81,6 +91,8 @@ public class MultyplayerManager : ColyseusManager<MultyplayerManager>
         var position = new Vector3(player.pX, player.pY, player.pZ);
         var enemy = Instantiate(_enemy, position, Quaternion.identity);
         enemy.Init(key, player);
+        enemy.GetComponent<SetSkin>().Set(_skins.GetMaterial(player.skin));
+
         _enemies.Add(key, enemy);
     }
 
@@ -88,10 +100,13 @@ public class MultyplayerManager : ColyseusManager<MultyplayerManager>
     {
         var position = new Vector3(player.pX, player.pY, player.pZ);
 
-        var playerCharacter = Instantiate(_player, position, Quaternion.identity);
+        Quaternion rotation = Quaternion.Euler(0, player.rY, 0);
+        var playerCharacter = Instantiate(_player, position, rotation);
         player.OnChange += playerCharacter.OnChange;
 
-        _room.OnMessage<string>("Restart", playerCharacter.GetComponent<Controller>().Restart);
+        _room.OnMessage<int>("Restart", playerCharacter.GetComponent<Controller>().Restart);
+
+        playerCharacter.GetComponent<SetSkin>().Set(_skins.GetMaterial(player.skin));
     }
 
     protected override void OnDestroy()
